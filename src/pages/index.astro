@@ -1,19 +1,18 @@
 ---
-import Principal from "../components/Principal.vue"
+import Principal from "../components/Principal.vue";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Calculadora</title>
-	</head>
-	<body class="bg-gray-100">
-		<h1 class=" mt-7 text-2xl sm:text-3xl font-bold text-center text-blue-600 mb-3">
-			Calculadora de Consumo Eléctrico y Paneles Solares
-		</h1>
- 		<Principal client:load/>
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Calculadora</title>
+  </head>
+  <body>
+    <Principal client:load />
+  </body>
 </html>
+
+<script is:inline></script>
