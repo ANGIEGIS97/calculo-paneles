@@ -77,6 +77,14 @@
           </td>
         </tr>
         <tr class="border-b bg-yellow-50">
+          <td class="py-2 font-medium">Ahorro estimado anual:</td>
+          <td class="py-2">
+            <span class="text-yellow-600 font-bold">
+              ${{ ahorroEstimado.anual.toLocaleString() }} pesos
+            </span>
+          </td>
+        </tr>
+        <tr class="border-b bg-yellow-50">
           <td class="py-2 font-medium flex">
             Ahorro estimado (25 años):
             <span
@@ -87,7 +95,7 @@
           </td>
           <td class="py-2">
             <span class="text-yellow-600 font-bold">
-              ${{ ahorroEstimado.toLocaleString() }} pesos
+              ${{ ahorroEstimado.total.toLocaleString() }} pesos
             </span>
           </td>
         </tr>
@@ -147,7 +155,7 @@ export default {
     },
     ahorroEstimado() {
       const costoElectricidadAnual = this.consumoAnualTotal * 867.8;
-      const ahorroAnual = Math.min(
+      const ahorroAnualBase = Math.min(
         costoElectricidadAnual,
         this.generacionEnergiaAnual * 867.8
       );
@@ -155,10 +163,15 @@ export default {
       let ahorroTotal = 0;
 
       for (let año = 1; año <= 25; año++) {
-        ahorroTotal += ahorroAnual * Math.pow(1 + inflacionAnual, año - 1);
+        ahorroTotal += ahorroAnualBase * Math.pow(1 + inflacionAnual, año - 1);
       }
 
-      return Math.round(ahorroTotal);
+      const ahorroAnualPromedio = ahorroTotal / 25;
+
+      return {
+        anual: Math.round(ahorroAnualPromedio),
+        total: Math.round(ahorroTotal),
+      };
     },
   },
 };
