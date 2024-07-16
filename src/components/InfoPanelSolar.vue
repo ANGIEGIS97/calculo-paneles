@@ -8,7 +8,7 @@
       <div>
         <label
           for="panel-type"
-          class="text-sm font-medium text-gray-700 flex items-center mb-2"
+          class="text-sm font-medium text-gray-700 flex items-center"
         >
           Tipo de panel
           <span
@@ -91,10 +91,7 @@
       </div>
       <!-- Selector para las horas de sol por día -->
       <div>
-        <label
-          for="horas-sol"
-          class="flex text-sm font-medium text-gray-700 mb-2"
-        >
+        <label for="horas-sol" class="flex text-sm font-medium text-gray-700">
           Horas de sol por día (efectivas)
           <span
             ref="tooltip4"

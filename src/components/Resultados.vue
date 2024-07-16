@@ -9,7 +9,7 @@
           <td class="py-2 font-medium">Consumo mensual total:</td>
           <td class="py-2">
             <span class="text-green-600 font-bold">
-              {{ consumoMensualTotal.toFixed(2) }} kWh
+              {{ consumoMensualTotal }} kWh
             </span>
             <!-- <span class="text-gray-600">
               (${{ (consumoMensualTotal * 867.8).toFixed(2) }} pesos)
@@ -20,7 +20,7 @@
           <td class="py-2 font-medium">Consumo diario promedio:</td>
           <td class="py-2">
             <span class="text-green-600 font-bold">
-              {{ consumoDiarioPromedio.toFixed(2) }} kWh
+              {{ consumoDiarioPromedio }} kWh
             </span>
             <!-- <span class="text-gray-600">
               (${{ (consumoDiarioPromedio * 867.8).toFixed(2) }} pesos)
@@ -31,7 +31,7 @@
           <td class="py-2 font-medium">Consumo anual total:</td>
           <td class="py-2">
             <span class="text-green-600 font-bold">
-              {{ consumoAnualTotal.toFixed(2) }} kWh
+              {{ consumoAnualTotal }} kWh
             </span>
             <!-- <span class="text-gray-600">
               (${{ (consumoAnualTotal * 867.8).toFixed(2) }} pesos)
@@ -77,16 +77,8 @@
           </td>
         </tr>
         <tr class="border-b bg-yellow-50">
-          <td class="py-2 font-medium">Ahorro estimado anual:</td>
-          <td class="py-2">
-            <span class="text-yellow-600 font-bold">
-              ${{ ahorroEstimado.anual.toLocaleString() }} pesos
-            </span>
-          </td>
-        </tr>
-        <tr class="border-b bg-yellow-50">
           <td class="py-2 font-medium flex">
-            Ahorro estimado (25 años):
+            Ahorro estimado (12 años):
             <span
               ref="tooltip1"
               class="ml-2 text-white bg-gray-400 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
@@ -95,20 +87,55 @@
           </td>
           <td class="py-2">
             <span class="text-yellow-600 font-bold">
-              ${{ ahorroEstimado.total.toLocaleString() }} pesos
+              ${{ ahorroEstimado.toLocaleString() }} pesos
             </span>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <div v-if="mostrarResultados" class="bg-white shadow-md rounded-lg p-6">
+      <div class="mt-6 flex flex-col lg:flex-row gap-6">
+        <div class="w-full lg:w-1/2">
+          <h3
+            class="text-xl font-bold text-gray-800 mb-4 text-center sm:text-left"
+          >
+            Comparación de Energía Anual
+          </h3>
+          <GraficoElectricidad
+            :key="chartKey"
+            :generacionEnergiaAnual="generacionEnergiaAnual"
+            :consumoAnualTotal="consumoAnualTotal"
+          />
+        </div>
+        <div class="w-full lg:w-1/2">
+          <h3
+            class="text-xl font-bold text-gray-800 mb-4 text-center sm:text-left"
+          >
+            Proyección de Ahorro
+          </h3>
+          <GraficoAhorro
+            :key="lineChartKey"
+            :consumoAnualTotal="consumoAnualTotal"
+            :generacionEnergiaAnual="generacionEnergiaAnual"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
+import GraficoElectricidad from "./GraficoElectricidad.vue";
+import GraficoAhorro from "./GraficoAhorro.vue";
 
 export default {
+  components: {
+    GraficoElectricidad,
+    GraficoAhorro,
+  },
   props: {
     mostrarResultados: Boolean,
     consumoMensualTotal: Number,
@@ -117,6 +144,12 @@ export default {
     eficienciaPanel: Number,
     tipoPanel: String,
     generacionEnergiaAnual: Number,
+  },
+  data() {
+    return {
+      chartKey: 0,
+      lineChartKey: 0,
+    };
   },
   mounted() {
     this.$nextTick(() => {
@@ -131,11 +164,23 @@ export default {
       if (this.$refs.tooltip1) {
         tippy(this.$refs.tooltip1, {
           content:
-            "El calculo del ahorro considera *Costo anual de electricidad. *Energia generada anualmente por el sistema solar. *Inflacion anual estimada del 4% en el costo de la electricidad. *El ahorro se acumula año tras año considerando la Inflación. *25 años vida util panel solar",
+            "El calculo del ahorro considera *Costo anual de electricidad. *Energia generada anualmente por el sistema solar. *Inflacion anual estimada del 4% en el costo de la electricidad. *El ahorro se acumula año tras año considerando la Inflación. *12 años vida util panel solar",
           placement: "top",
           arrow: true,
         });
       }
+    },
+    updateChartKey() {
+      this.chartKey += 1;
+      this.lineChartKey += 1;
+    },
+  },
+  watch: {
+    generacionEnergiaAnual() {
+      this.updateChartKey();
+    },
+    consumoAnualTotal() {
+      this.updateChartKey();
     },
   },
   computed: {
@@ -155,23 +200,18 @@ export default {
     },
     ahorroEstimado() {
       const costoElectricidadAnual = this.consumoAnualTotal * 867.8;
-      const ahorroAnualBase = Math.min(
+      const ahorroAnual = Math.min(
         costoElectricidadAnual,
         this.generacionEnergiaAnual * 867.8
       );
       const inflacionAnual = 0.04; // 4% de inflación anual
       let ahorroTotal = 0;
 
-      for (let año = 1; año <= 25; año++) {
-        ahorroTotal += ahorroAnualBase * Math.pow(1 + inflacionAnual, año - 1);
+      for (let año = 1; año <= 12; año++) {
+        ahorroTotal += ahorroAnual * Math.pow(1 + inflacionAnual, año - 1);
       }
 
-      const ahorroAnualPromedio = ahorroTotal / 25;
-
-      return {
-        anual: Math.round(ahorroAnualPromedio),
-        total: Math.round(ahorroTotal),
-      };
+      return Math.round(ahorroTotal);
     },
   },
 };
