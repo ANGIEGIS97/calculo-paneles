@@ -11,9 +11,9 @@
             <span class="text-green-600 font-bold">
               {{ consumoMensualTotal.toFixed(2) }} kWh
             </span>
-            <span class="text-gray-600">
+            <!-- <span class="text-gray-600">
               (${{ (consumoMensualTotal * 867.8).toFixed(2) }} pesos)
-            </span>
+            </span> -->
           </td>
         </tr>
         <tr class="border-b bg-green-50">
@@ -22,9 +22,9 @@
             <span class="text-green-600 font-bold">
               {{ consumoDiarioPromedio.toFixed(2) }} kWh
             </span>
-            <span class="text-gray-600">
+            <!-- <span class="text-gray-600">
               (${{ (consumoDiarioPromedio * 867.8).toFixed(2) }} pesos)
-            </span>
+            </span> -->
           </td>
         </tr>
         <tr class="border-b bg-green-50">
@@ -33,9 +33,9 @@
             <span class="text-green-600 font-bold">
               {{ consumoAnualTotal.toFixed(2) }} kWh
             </span>
-            <span class="text-gray-600">
+            <!-- <span class="text-gray-600">
               (${{ (consumoAnualTotal * 867.8).toFixed(2) }} pesos)
-            </span>
+            </span> -->
           </td>
         </tr>
         <tr class="border-b bg-purple-50">
