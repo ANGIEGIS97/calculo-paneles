@@ -62,12 +62,49 @@ export default {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
+          aspectRatio: 1,
+          plugins: {
+            legend: {
+              position: "top",
+              labels: {
+                boxWidth: 10,
+                font: {
+                  size: 10,
+                },
+              },
+            },
+            title: {
+              display: true,
+              text: "Generación vs Consumo",
+              font: {
+                size: 14,
+              },
+            },
+          },
           scales: {
+            x: {
+              ticks: {
+                maxRotation: 90,
+                minRotation: 90,
+                font: {
+                  size: 8,
+                },
+              },
+            },
             y: {
               beginAtZero: true,
               title: {
                 display: true,
                 text: "kWh",
+                font: {
+                  size: 10,
+                },
+              },
+              ticks: {
+                font: {
+                  size: 8,
+                },
               },
             },
           },
