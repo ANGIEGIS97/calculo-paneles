@@ -47,35 +47,46 @@
           :for="`cantidad-${index}`"
           class="block text-sm font-medium text-gray-700"
         >
-          Cantidad
+          Cantidad: {{ electrodomestico.cantidad }}
         </label>
         <input
           v-model.number="electrodomestico.cantidad"
-          type="number"
+          type="range"
           :id="`cantidad-${index}`"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          placeholder="Cantidad"
+          class="mt-1 block w-full"
           min="0"
+          max="10"
+          step="1"
           @input="actualizarElectrodomestico"
         />
+        <div class="flex justify-between text-xs text-gray-500">
+          <span>0</span>
+          <span>5</span>
+          <span>10</span>
+        </div>
       </div>
       <div>
         <label
           :for="`horas-${index}`"
           class="block text-sm font-medium text-gray-700"
         >
-          Horas de uso diario
+          Horas de uso diario: {{ electrodomestico.horasPorDia }}
         </label>
         <input
           v-model.number="electrodomestico.horasPorDia"
-          type="number"
+          type="range"
           :id="`horas-${index}`"
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          placeholder="Horas por día"
+          class="mt-1 block w-full"
           min="0"
           max="24"
+          step="1"
           @input="actualizarElectrodomestico"
         />
+        <div class="flex justify-between text-xs text-gray-500">
+          <span>0h</span>
+          <span>12h</span>
+          <span>24h</span>
+        </div>
       </div>
       <div>
         <label
@@ -118,13 +129,17 @@ export default {
       this.estaExpandido = !this.estaExpandido;
     },
     incrementarCantidad() {
-      this.electrodomestico.cantidad =
-        (this.electrodomestico.cantidad || 0) + 1;
+      this.electrodomestico.cantidad = Math.min(
+        (this.electrodomestico.cantidad || 0) + 1,
+        10
+      );
       this.actualizarElectrodomestico();
     },
     incrementarHoras() {
-      this.electrodomestico.horasPorDia =
-        (this.electrodomestico.horasPorDia || 0) + 1;
+      this.electrodomestico.horasPorDia = Math.min(
+        (this.electrodomestico.horasPorDia || 0) + 1,
+        24
+      );
       this.actualizarElectrodomestico();
     },
   },

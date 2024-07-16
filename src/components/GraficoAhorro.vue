@@ -11,6 +11,7 @@ export default {
   props: {
     consumoAnualTotal: Number,
     generacionEnergiaAnual: Number,
+    ahorroEstimado: Number,
   },
   data() {
     return {
@@ -29,9 +30,7 @@ export default {
       if (this.chart) {
         this.chart.destroy();
       }
-
       const ahorros = this.calcularAhorros();
-
       const ctx = this.$refs.chart.getContext("2d");
       this.chart = new Chart(ctx, {
         type: "line",
@@ -111,20 +110,11 @@ export default {
       });
     },
     calcularAhorros() {
-      const costoElectricidadAnual = this.consumoAnualTotal * 867.8;
-      const ahorroAnual = Math.min(
-        costoElectricidadAnual,
-        this.generacionEnergiaAnual * 867.8
-      );
-      const inflacionAnual = 0.04; // 4% de inflación anual
-      let ahorroTotal = 0;
+      const ahorroTotal = this.ahorroEstimado;
       const ahorros = [];
-
       for (let año = 1; año <= 12; año++) {
-        ahorroTotal += ahorroAnual * Math.pow(1 + inflacionAnual, año - 1);
-        ahorros.push(Math.round(ahorroTotal));
+        ahorros.push(Math.round((ahorroTotal / 12) * año));
       }
-
       return ahorros;
     },
     handleResize() {
@@ -138,6 +128,9 @@ export default {
       this.createChart();
     },
     generacionEnergiaAnual() {
+      this.createChart();
+    },
+    ahorroEstimado() {
       this.createChart();
     },
   },

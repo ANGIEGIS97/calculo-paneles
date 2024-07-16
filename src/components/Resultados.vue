@@ -9,7 +9,7 @@
           <td class="py-2 font-medium">Consumo mensual total:</td>
           <td class="py-2">
             <span class="text-green-600 font-bold">
-              {{ consumoMensualTotal }} kWh
+              {{ consumoMensualTotal.toFixed(2) }} kWh
             </span>
             <!-- <span class="text-gray-600">
               (${{ (consumoMensualTotal * 867.8).toFixed(2) }} pesos)
@@ -20,7 +20,7 @@
           <td class="py-2 font-medium">Consumo diario promedio:</td>
           <td class="py-2">
             <span class="text-green-600 font-bold">
-              {{ consumoDiarioPromedio }} kWh
+              {{ consumoDiarioPromedio.toFixed(2) }} kWh
             </span>
             <!-- <span class="text-gray-600">
               (${{ (consumoDiarioPromedio * 867.8).toFixed(2) }} pesos)
@@ -31,7 +31,7 @@
           <td class="py-2 font-medium">Consumo anual total:</td>
           <td class="py-2">
             <span class="text-green-600 font-bold">
-              {{ consumoAnualTotal }} kWh
+              {{ consumoAnualTotal.toFixed(2) }} kWh
             </span>
             <!-- <span class="text-gray-600">
               (${{ (consumoAnualTotal * 867.8).toFixed(2) }} pesos)
@@ -118,6 +118,7 @@
             :key="lineChartKey"
             :consumoAnualTotal="consumoAnualTotal"
             :generacionEnergiaAnual="generacionEnergiaAnual"
+            :ahorroEstimado="ahorroEstimado"
           />
         </div>
       </div>
@@ -204,10 +205,17 @@ export default {
         costoElectricidadAnual,
         this.generacionEnergiaAnual * 867.8
       );
-      const inflacionAnual = 0.04; // 4% de inflación anual
+
+      function inflacionAleatoria() {
+        const min = 0.02; // 2% de inflación anual minimo
+        const max = 0.1; // 10% de inflación anual maximo
+        return Math.random() * (max - min) + min;
+      }
+
       let ahorroTotal = 0;
 
       for (let año = 1; año <= 12; año++) {
+        const inflacionAnual = inflacionAleatoria();
         ahorroTotal += ahorroAnual * Math.pow(1 + inflacionAnual, año - 1);
       }
 
