@@ -77,11 +77,11 @@
           </td>
         </tr>
         <tr class="border-b bg-yellow-50">
-          <td class="py-2 font-medium flex">
+          <td class="py-2 font-medium flex items-center">
             Ahorro estimado (12 años):
             <span
               ref="tooltip1"
-              class="ml-2 text-white bg-gray-400 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
+              class="ml-2 text-white bg-gray-400 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer flex-shrink-0"
               >?</span
             >
           </td>
@@ -165,7 +165,7 @@ export default {
       if (this.$refs.tooltip1) {
         tippy(this.$refs.tooltip1, {
           content:
-            "El calculo del ahorro considera *Costo anual de electricidad. *Energia generada anualmente por el sistema solar. *Inflacion anual estimada del 4% en el costo de la electricidad. *El ahorro se acumula año tras año considerando la Inflación. *12 años vida util panel solar",
+            "El calculo del ahorro considera *Costo anual de electricidad. *Energia generada anualmente por el sistema solar. *Inflacion anual estimada del 2% - 10% en el costo de la electricidad. *El ahorro se acumula año tras año considerando la Inflación. *12 años vida util panel solar",
           placement: "top",
           arrow: true,
         });
@@ -207,8 +207,8 @@ export default {
       );
 
       function inflacionAleatoria() {
-        const min = 0.02; // 2% de inflación anual minimo
-        const max = 0.1; // 10% de inflación anual maximo
+        const min = 0.02; // 2% de inflación anual
+        const max = 0.1; // 10% de inflación anual
         return Math.random() * (max - min) + min;
       }
 
