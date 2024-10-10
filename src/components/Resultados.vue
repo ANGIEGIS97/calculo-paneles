@@ -11,9 +11,6 @@
             <span class="text-green-600 font-bold">
               {{ consumoMensualTotal.toFixed(2) }} kWh
             </span>
-            <!-- <span class="text-gray-600">
-              (${{ (consumoMensualTotal * 867.8).toFixed(2) }} pesos)
-            </span> -->
           </td>
         </tr>
         <tr class="border-b bg-green-50">
@@ -22,9 +19,6 @@
             <span class="text-green-600 font-bold">
               {{ consumoDiarioPromedio.toFixed(2) }} kWh
             </span>
-            <!-- <span class="text-gray-600">
-              (${{ (consumoDiarioPromedio * 867.8).toFixed(2) }} pesos)
-            </span> -->
           </td>
         </tr>
         <tr class="border-b bg-green-50">
@@ -33,9 +27,6 @@
             <span class="text-green-600 font-bold">
               {{ consumoAnualTotal.toFixed(2) }} kWh
             </span>
-            <!-- <span class="text-gray-600">
-              (${{ (consumoAnualTotal * 867.8).toFixed(2) }} pesos)
-            </span> -->
           </td>
         </tr>
         <tr class="border-b bg-purple-50">
@@ -94,35 +85,40 @@
       </tbody>
     </table>
 
-    <div v-if="mostrarResultados" class="bg-white shadow-md rounded-lg p-6">
-      <div class="mt-6 flex flex-col lg:flex-row gap-6">
-        <div class="w-full lg:w-1/2">
-          <h3
-            class="text-xl font-bold text-gray-800 mb-4 text-center sm:text-left"
-          >
-            Comparación de Energía Anual
-          </h3>
-          <GraficoElectricidad
-            :key="chartKey"
-            :generacionEnergiaAnual="generacionEnergiaAnual"
-            :consumoAnualTotal="consumoAnualTotal"
-          />
-        </div>
-        <div class="w-full lg:w-1/2">
-          <h3
-            class="text-xl font-bold text-gray-800 mb-4 text-center sm:text-left"
-          >
-            Proyección de Ahorro
-          </h3>
-          <GraficoAhorro
-            :key="lineChartKey"
-            :consumoAnualTotal="consumoAnualTotal"
-            :generacionEnergiaAnual="generacionEnergiaAnual"
-            :ahorroEstimado="ahorroEstimado"
-          />
-        </div>
+    <div class="mt-6 flex flex-col lg:flex-row gap-6">
+      <div class="w-full lg:w-1/2">
+        <h3
+          class="text-xl font-bold text-gray-800 mb-4 text-center sm:text-left"
+        >
+          Comparación de Energía Anual
+        </h3>
+        <GraficoElectricidad
+          :key="chartKey"
+          :generacionEnergiaAnual="generacionEnergiaAnual"
+          :consumoAnualTotal="consumoAnualTotal"
+        />
+      </div>
+      <div class="w-full lg:w-1/2">
+        <h3
+          class="text-xl font-bold text-gray-800 mb-4 text-center sm:text-left"
+        >
+          Proyección de Ahorro
+        </h3>
+        <GraficoAhorro
+          :key="lineChartKey"
+          :consumoAnualTotal="consumoAnualTotal"
+          :generacionEnergiaAnual="generacionEnergiaAnual"
+          :ahorroEstimado="ahorroEstimado"
+        />
       </div>
     </div>
+
+    <CostosInstalacion
+      :panelesSolaresRequeridos="panelesSolaresRequeridos"
+      :solarPanelOutput="solarPanelOutput"
+      :eficienciaPanel="eficienciaPanel"
+      :tipoPanel="tipoPanel"
+    />
   </div>
 </template>
 
@@ -131,11 +127,13 @@ import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import GraficoElectricidad from "./GraficoElectricidad.vue";
 import GraficoAhorro from "./GraficoAhorro.vue";
+import CostosInstalacion from "./CostosInstalacion.vue";
 
 export default {
   components: {
     GraficoElectricidad,
     GraficoAhorro,
+    CostosInstalacion,
   },
   props: {
     mostrarResultados: Boolean,
@@ -165,7 +163,7 @@ export default {
       if (this.$refs.tooltip1) {
         tippy(this.$refs.tooltip1, {
           content:
-            "El calculo del ahorro considera *Costo anual de electricidad. *Energia generada anualmente por el sistema solar. *Inflacion anual estimada del 2% - 10% en el costo de la electricidad. *El ahorro se acumula año tras año considerando la Inflación. *12 años vida util panel solar",
+            "El calculo del ahorro considera *Costo anual de electricidad. *Energia generada anualmente por el sistema solar. *Inflacion anual estimada del 4% en el costo de la electricidad. *El ahorro se acumula año tras año considerando la Inflación. *12 años vida util panel solar",
           placement: "top",
           arrow: true,
         });
