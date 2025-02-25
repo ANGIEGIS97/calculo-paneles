@@ -1,47 +1,30 @@
-# Astro Starter Kit: Minimal
+# Calculadora de Paneles Solares
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Esta aplicación web ayuda a los usuarios a calcular la energía generada por paneles solares y a determinar cuántos paneles se necesitan para satisfacer sus necesidades energéticas diarias. Está desarrollada con Astro.js, Vue.js y Tailwind CSS.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Características Principales
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. **Ingreso de Datos de Electrodomésticos:**
+   - Cantidad y horas de uso diarias para televisores, licuadoras y bombillas.
+   - Deslizadores para ajustar cantidad y horas de uso.
+   - Selección de potencia en watts.
 
-## 🚀 Project Structure
+2. **Información del Panel Solar:**
+   - Tipo de panel solar (e.g., Monocristalino de alta eficiencia).
+   - Ajuste de eficiencia del panel con un deslizador.
+   - Potencia del panel (250 a 500 watts).
+   - Horas de sol efectivas por día en diferentes ciudades.
 
-Inside of your Astro project, you'll see the following folders and files:
+3. **Cálculos Automáticos:**
+   - Botón "Calcular" para procesar datos y estimar la energía generada.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+4. **Gráficos Informativos:**
+   - Generación de gráficos interactivos utilizando Chart.js para visualizar los datos de consumo y generación de energía.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Tecnologías Utilizadas
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- **Astro.js:** Estructura y construcción del sitio web.
+- **Vue.js:** Creación de componentes interactivos.
+- **Tailwind CSS:** Diseño y estilización responsiva.
+- **Chart.js:** Generación de gráficos interactivos.
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-100 min-h-screen py-8">
-    <div class="container mx-auto px-4">
-      <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="bg-white shadow-md rounded-lg p-4 sm:p-8 mb-8">
         <h1 class="text-blue-500 text-center text-2xl text-bold mb-4">
           Calculadora de paneles solares
         </h1>
