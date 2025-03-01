@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8 bg-white rounded-lg sm:p-6 p-0">
+  <div class="mt-8 bg-white rounded-lg">
     <h2
       class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:text-left text-center"
     >

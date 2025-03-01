@@ -53,6 +53,7 @@
         :eficienciaPanel="eficienciaPanel"
         :tipoPanel="tipoPanel"
         :generacionEnergiaAnual="generacionEnergiaAnual"
+        :horasDiarias="horasDiariasTotal"
       />
     </div>
   </div>
@@ -72,12 +73,12 @@ export default {
   data() {
     return {
       electrodomesticos: [
-        { nombre: "Televisor", watts: 175, horasPorDia: 0, cantidad: 0 },
-        { nombre: "Licuadora", watts: 300, horasPorDia: 0, cantidad: 0 },
-        { nombre: "Bombilla", watts: 20, horasPorDia: 0, cantidad: 0 },
-        { nombre: "Lavadora", watts: 350, horasPorDia: 0, cantidad: 0 },
-        { nombre: "Computador", watts: 200, horasPorDia: 0, cantidad: 0 },
-        { nombre: "Brilladora", watts: 500, horasPorDia: 0, cantidad: 0 },
+        { nombre: "Televisor", watts: 120, horasPorDia: 0, cantidad: 0 },
+        { nombre: "Bombilla", watts: 10, horasPorDia: 0, cantidad: 0 },
+        { nombre: "Personalizado", watts: 100, horasPorDia: 0, cantidad: 0 },
+        { nombre: "Licuadora", watts: 500, horasPorDia: 0, cantidad: 0 },
+        { nombre: "Lavadora", watts: 700, horasPorDia: 0, cantidad: 0 },
+        { nombre: "Computador", watts: 150, horasPorDia: 0, cantidad: 0 },
       ],
       paginaActual: 1,
       elementosPorPagina: 3,
@@ -89,6 +90,7 @@ export default {
       tipoPanel: "",
       horasSolDia: 0,
       generacionEnergiaAnual: 0,
+      horasDiariasTotal: 0,
     };
   },
   computed: {
@@ -127,6 +129,12 @@ export default {
               electrodomestico.cantidad) /
               1000
           );
+        },
+        0
+      );
+      this.horasDiariasTotal = this.electrodomesticos.reduce(
+        (total, electrodomestico) => {
+          return total + (electrodomestico.horasPorDia * electrodomestico.cantidad);
         },
         0
       );
